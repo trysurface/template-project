@@ -1,27 +1,16 @@
 import { prisma } from '@template-project/template-prisma';
 import type {
-  SignedInAuthObject,
-  SignedOutAuthObject,
+  LooseAuthProp,
 } from '@clerk/nextjs/api';
-// import {
-//   API_KEY,
-//   API_URL,
-//   API_VERSION,
-//   SECRET_KEY,
-//   getAuth,
-// } from '@clerk/nextjs/server';
 
 import {
-  decodeJwt,
-  signedInAuthObject,
-  signedOutAuthObject,
+  signedOutAuthObject, type WithAuthProp
 } from '@clerk/clerk-sdk-node';
 import { type CreateExpressContextOptions } from '@trpc/server/adapters/express';
-// import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
-// import { API_KEY, API_URL, API_VERSION, getAuth, SECRET_KEY } from '@clerk/nextjs/server';
+import type { Request } from 'express';
 
 type CreateContextOptions = {
-  auth: SignedInAuthObject | SignedOutAuthObject;
+  auth: LooseAuthProp['auth'];
 };
 
 /**
@@ -40,35 +29,7 @@ const createInnerContext = (opts: CreateContextOptions) => {
   };
 };
 
-// export const createNextContext = (opts: CreateNextContextOptions) => {
-//   return createInnerContext({ auth: getAuth(opts.req) });
-// };
-
-const parseJwt = (req: CreateExpressContextOptions['req']) => {
-  const headerToken = req.headers.authorization?.replace('Bearer ', '');
-  return decodeJwt(headerToken || '');
-};
-
-export const createExpressContext = ({ req }: CreateExpressContextOptions) => {
-  const options = {
-    // apiKey: API_KEY,
-    // secretKey: SECRET_KEY,
-    // apiUrl: API_URL,
-    // apiVersion: API_VERSION,
-    // authStatus: req.headers.authStatus,
-    // authMessage: req.headers.authMessage,
-    // authReason: req.headers.authReason,
-  };
-
-  let auth: SignedInAuthObject | SignedOutAuthObject;
-
-  try {
-    const jwt = parseJwt(req);
-    // @ts-ignore
-    auth = signedInAuthObject(jwt.payload, { ...options, token: jwt.raw.text });
-  } catch (error) {
-    auth = signedOutAuthObject(options);
-  }
-
+export const createExpressContext = ({ req }: CreateExpressContextOptions & { req: WithAuthProp<Request> }) => {
+ const auth: LooseAuthProp['auth'] = req.auth ?? signedOutAuthObject();
   return createInnerContext({ auth });
 };

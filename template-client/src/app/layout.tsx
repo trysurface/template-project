@@ -2,6 +2,7 @@ import '~/styles/globals.css';
 
 import { Inter } from 'next/font/google';
 import { prisma } from '@template-project/template-prisma';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -22,7 +23,9 @@ export default async function RootLayout({
   const x = await prisma.account.count();
   return (
     <html lang="en">
+    <ClerkProvider>
       <body className={`font-sans ${inter.variable}`}>{children}</body>
+    </ClerkProvider>
     </html>
   );
 }
