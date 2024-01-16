@@ -4,6 +4,7 @@
   "exclude": ["node_modules", "dist", "zod"],
   "compilerOptions": {
     "module": "ES2022",
-    "target": "ES2022"
+    "target": "ES2022",
+    "outDir": "./dist"
   }
 }

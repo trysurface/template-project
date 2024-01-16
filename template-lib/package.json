@@ -2,14 +2,22 @@
   "name": "@template-project/template-lib",
   "private": true,
   "version": "0.1.0",
+  "exports": {
+    "types": "./src/index.ts",
+    "development": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
   "files": [
     "src/*"
   ],
   "scripts": {
-    "clean": "rimraf node_modules"
+    "clean": "rimraf node_modules dist",
+    "build": "tsup"
   },
   "dependencies": {
-    "dotenv-cli": "^7.2.1"
+    "dotenv-cli": "^7.2.1",
+    "tsup": "^8.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "type": "module"
 }
