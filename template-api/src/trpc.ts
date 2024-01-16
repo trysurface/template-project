@@ -2,9 +2,9 @@ import { initTRPC } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 import { enforceUserIsAuthed } from './middlewares/enforceUserIsAuthed.js';
-import type { createNextContext } from './context/createContext.js';
+import type { createExpressContext } from './context/createContext.js';
 
-const t = initTRPC.context<typeof createNextContext>().create({
+const t = initTRPC.context<typeof createExpressContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {

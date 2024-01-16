@@ -17,7 +17,8 @@ import {
   signedOutAuthObject,
 } from '@clerk/clerk-sdk-node';
 import { type CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+// import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+// import { API_KEY, API_URL, API_VERSION, getAuth, SECRET_KEY } from '@clerk/nextjs/server';
 
 type CreateContextOptions = {
   auth: SignedInAuthObject | SignedOutAuthObject;
@@ -39,9 +40,9 @@ const createInnerContext = (opts: CreateContextOptions) => {
   };
 };
 
-export const createNextContext = (opts: CreateNextContextOptions) => {
-  return createInnerContext({ auth: getAuth(opts.req) });
-};
+// export const createNextContext = (opts: CreateNextContextOptions) => {
+//   return createInnerContext({ auth: getAuth(opts.req) });
+// };
 
 const parseJwt = (req: CreateExpressContextOptions['req']) => {
   const headerToken = req.headers.authorization?.replace('Bearer ', '');
@@ -63,6 +64,7 @@ export const createExpressContext = ({ req }: CreateExpressContextOptions) => {
 
   try {
     const jwt = parseJwt(req);
+    // @ts-ignore
     auth = signedInAuthObject(jwt.payload, { ...options, token: jwt.raw.text });
   } catch (error) {
     auth = signedOutAuthObject(options);
