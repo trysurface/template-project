@@ -1,0 +1,5 @@
+packages:
+  - 'template-api'
+  - 'template-client'
+  - 'template-lib'
+  - 'template-prisma'

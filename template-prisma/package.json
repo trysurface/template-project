@@ -1,0 +1,37 @@
+{
+  "name": "@template-project/template-prisma",
+  "private": true,
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "files": [
+    "src",
+    "zod",
+    "zod-utils.ts"
+  ],
+  "scripts": {
+    "clean": "rimraf node_modules",
+    "db:migrate:deploy": "dotenv -e ../.env -- prisma migrate deploy",
+    "db:migrate:dev": "dotenv -e ../.env -- pnpm prisma migrate dev",
+    "db:migrate:dev:safe": "dotenv -e ../.env -- pnpm prisma migrate dev --create-only",
+    "db:pull": "dotenv -e ../.env -- pnpm prisma db pull",
+    "db:up": "docker-compose up -d",
+    "db:setup": "pnpm db:up && pnpm db:migrate:dev",
+    "db:start": "pnpm db:setup",
+    "format": "prisma format",
+    "generate": "prisma generate",
+    "lint": "eslint ./src --fix",
+    "post-install": "pnpm generate",
+    "predev": "pnpm generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "dotenv-cli": "^7.2.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.0.0",
+    "prisma-dbml-generator": "^0.10.0",
+    "prisma-json-types-generator": "^2.5.0",
+    "zod": "^3.21.4",
+    "zod-prisma": "^0.5.4"
+  }
+}

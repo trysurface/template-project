@@ -1,0 +1,15 @@
+{
+  "name": "@template-project/template-lib",
+  "private": true,
+  "version": "0.1.0",
+  "files": [
+    "src/*"
+  ],
+  "scripts": {
+    "clean": "rimraf node_modules"
+  },
+  "dependencies": {
+    "dotenv-cli": "^7.2.1"
+  },
+  "devDependencies": {}
+}
