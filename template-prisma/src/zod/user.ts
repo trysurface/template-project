@@ -1,5 +1,5 @@
 import * as z from "zod"
-import * as imports from "../zod-utils"
+import * as imports from "../../zod-utils"
 import { CompleteAccount, AccountModel, CompleteSession, SessionModel, CompletePost, PostModel } from "./index"
 
 export const _UserModel = z.object({

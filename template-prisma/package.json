@@ -3,13 +3,18 @@
   "private": true,
   "version": "0.1.0",
   "main": "./src/index.ts",
+  "exports": {
+    "types": "./src/index.ts",
+    "development": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
   "files": [
     "src",
     "zod",
     "zod-utils.ts"
   ],
   "scripts": {
-    "clean": "rimraf node_modules",
+    "clean": "rimraf node_modules dist",
     "db:migrate:deploy": "dotenv -e ../.env -- prisma migrate deploy",
     "db:migrate:dev": "dotenv -e ../.env -- pnpm prisma migrate dev",
     "db:migrate:dev:safe": "dotenv -e ../.env -- pnpm prisma migrate dev --create-only",
@@ -21,17 +26,20 @@
     "generate": "prisma generate",
     "lint": "eslint ./src --fix",
     "post-install": "pnpm generate",
-    "predev": "pnpm generate"
+    "predev": "pnpm generate",
+    "build": "tsup"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
     "dotenv-cli": "^7.2.1"
   },
   "devDependencies": {
+    "tsup": "^8.0.1",
     "prisma": "^5.0.0",
     "prisma-dbml-generator": "^0.10.0",
     "prisma-json-types-generator": "^2.5.0",
     "zod": "^3.21.4",
     "zod-prisma": "^0.5.4"
-  }
+  },
+  "type": "module"
 }

@@ -1,5 +1,5 @@
 // import { authWebhook } from '@acme/webhook';
-// import { createExpressMiddleware } from '@trpc/server/adapters/express';
+import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import express from 'express';
 
 import { publicProcedure, router } from './trpc.js';
@@ -8,7 +8,7 @@ import { taskRouter } from './routers/task/task.router.js';
 import { env } from './env.js';
 import {helloFromLib}  from '@template-project/template-lib';
 
-// import { createExpressContext } from './context/createContext.js';
+import { createExpressContext } from './context/createContext.js';
 
 const app = express();
 const port = env.EXPRESS_PORT ?? 3000;
@@ -28,13 +28,13 @@ const appRouter = router({
 
 export type AppRouter = typeof appRouter;
 
-// app.use(
-//   '/api/trpc',
-//   createExpressMiddleware({
-//     router: appRouter,
-//     createContext: createExpressContext,
-//   }),
-// );
+app.use(
+  '/api/trpc',
+  createExpressMiddleware({
+    router: appRouter,
+    createContext: createExpressContext,
+  }),
+);
 
 // app.use('/api/webhooks/user', express.json(), (req, res) => {
 //   authWebhook(req.body, req.headers)
